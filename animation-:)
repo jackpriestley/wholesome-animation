@@ -1,0 +1,104 @@
+import simplegui
+import random
+
+# Create Global Variable
+
+r = 50
+x1 = random.randint(150, 550)
+x2 = random.randint(150, 550)
+x3 = random.randint(150, 550)
+x4 = random.randint(150, 550)
+y1 = random.randint(150, 200)
+y2 = random.randint(150, 200)
+y3 = random.randint(150, 200)
+y4 = random.randint(150, 200)
+
+
+def draw_handler(canvas):
+    # Draw Here!
+    global r
+    global x1
+    global x2
+    global x3
+    global x4
+    global y1
+    global y2
+    global y3
+    global y4
+    y1 = y1 + 10
+    y2 = y2 + 10
+    y3 = y3 + 10
+    y4 = y4 + 10
+    x1 = x1 - 1
+    x2 = x2 - 1
+    x3 = x3 - 1
+    x4 = x4 - 1
+    light_c = "#da0019"
+    dark_c = "#be0016"
+    roof_c = "#af0014"
+    #grass
+    canvas.draw_polygon([(0, 500), (600, 500), (600, 600), (0, 600)], 10, "#1fe060", "#1fe060")
+    canvas.draw_line([0, 500], [600, 500], 10, "#18b14c")
+    #house-clean
+    canvas.draw_polygon([(150, 510), (450, 510), (450, 400), (150, 400)], 10, dark_c, light_c)
+    #door-clean
+    canvas.draw_polygon([(270, 510), (330, 510), (330, 430), (270, 430)], 10, dark_c, light_c)
+    canvas.draw_circle((320, 470), 5, 1, dark_c, dark_c)
+    #windows-clean
+    canvas.draw_polygon([(180, 490), (240, 490), (240, 430), (180, 430)], 10, dark_c, light_c)
+    canvas.draw_line([210, 490], [210, 430], 10, dark_c)
+    canvas.draw_line([180, 460], [240, 460], 10, dark_c)
+    canvas.draw_polygon([(360, 490), (420, 490), (420, 430), (360, 430)], 10, dark_c, light_c)
+    canvas.draw_line([390, 490], [390, 430], 10, dark_c)
+    canvas.draw_line([360, 460], [420, 460], 10, dark_c)
+    #roof-clean
+    canvas.draw_polygon([(130, 400), (300, 300), (470, 400)], 10, dark_c, roof_c)
+    #bomb
+    if y1 < 510 and y2 < 510 and y3 < 510 and y4 < 510:
+        canvas.draw_circle((x1, y1), 10, 10, "#8c8d88", "#8c8d88")
+        canvas.draw_circle((x2, y2), 10, 10, "#8c8d88", "#8c8d88")
+        canvas.draw_circle((x3, y3), 10, 10, "#8c8d88", "#8c8d88")
+        canvas.draw_circle((x4, y4), 10, 10, "#8c8d88", "#8c8d88")
+    #explosion
+    x_var_list = [x1, x2, x3, x4]
+    y_var_list = [y1, y2, y3, y4]
+    if y1 > 510 and y2 > 510 and y3 > 510 and y4 > 510:
+        r = r + 10
+        for var in x_var_list:
+            canvas.draw_circle((var, 510), r, 1, "red", "red")
+            canvas.draw_circle((var, 510), r - 25, 1, "orange", "orange")
+            canvas.draw_circle((var, 510), r - 49, 1, "yellow", "yellow")
+        for var in y_var_list:
+            var = 510
+    #post-explosion
+
+    if r > 900:
+        light_c = "#606060"
+        dark_c = "#4e4e4e"
+        roof_c = "#444444"
+        #sky
+        canvas.draw_polygon([(0, 0), (600, 0), (600, 600), (0, 600)], 10, "#2bc4d4", "#2bc4d4")
+        #dirt
+        canvas.draw_polygon([(0, 500), (600, 500), (600, 600), (0, 600)], 10, "#8a5c2d", "#ae7439")
+        canvas.draw_line([0, 500], [600, 500], 10, "#8a5c2d")
+        #house-dirty
+        canvas.draw_polygon([(150, 510), (450, 510), (450, 400), (150, 400)], 10, dark_c, light_c)
+        #door-dirty
+        canvas.draw_polygon([(270, 510), (330, 510), (330, 430), (270, 430)], 10, dark_c, light_c)
+        canvas.draw_circle((320, 470), 5, 1, dark_c, dark_c)
+        #windows-dirty
+        canvas.draw_polygon([(180, 490), (240, 490), (240, 430), (180, 430)], 10, dark_c, light_c)
+        canvas.draw_line([210, 490], [210, 430], 10, dark_c)
+        canvas.draw_line([180, 460], [240, 460], 10, dark_c)
+        canvas.draw_polygon([(360, 490), (420, 490), (420, 430), (360, 430)], 10, dark_c, light_c)
+        canvas.draw_line([390, 490], [390, 430], 10, dark_c)
+        canvas.draw_line([360, 460], [420, 460], 10, dark_c)
+        #roof-dirty
+        canvas.draw_polygon([(130, 400), (300, 300), (470, 400)], 10, dark_c, roof_c)
+        
+
+
+frame = simplegui.create_frame('Testing', 600, 600)
+frame.set_canvas_background("#2bc4d4")
+frame.set_draw_handler(draw_handler)
+frame.start()
