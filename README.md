@@ -1,2 +1,2 @@
-This project is a simulated arms demonstration that gives useful pyrodynamics data and information
-This project is NOT useful!!!
+This project depicts a house getting destroyed 
+It helped me develop my skills with SimpleGUI
